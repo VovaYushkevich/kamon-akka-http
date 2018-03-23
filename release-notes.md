@@ -11,3 +11,7 @@ kamon-akka-http release notes
 - Bump Up all `kamon` dependencies to `0.6.7`
 
 - Fixed README collapse - by @petitviolet 
+
+### 23. Mar 2018: version 0.6.9
+
+- Add trace tags support - by @uyushkevich
