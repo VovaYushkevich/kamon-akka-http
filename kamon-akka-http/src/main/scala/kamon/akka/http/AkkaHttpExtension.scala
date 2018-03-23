@@ -28,10 +28,11 @@ object AkkaHttpExtension {
   log.info("Starting the Kamon(Akka-Http) extension")
 
   val settings = AkkaHttpExtensionSettings(Kamon.config)
-  val SegmentLibraryName = "akka-http-client"
+  val ServerLibraryName = "akka-http-server"
+  val ClientSegmentLibraryName = "akka-http-client"
 
   val metrics = {
-    val entity = Entity("akka-http-server", AkkaHttpServerMetrics.category)
+    val entity = Entity(ServerLibraryName, AkkaHttpServerMetrics.category)
     Kamon.metrics.entity(AkkaHttpServerMetrics, entity)
   }
 

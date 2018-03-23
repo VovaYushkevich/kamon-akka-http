@@ -112,7 +112,7 @@ class AkkaHttpClientInstrumentationSpec extends BaseKamonSpec {
           tags = Map(
             "trace" -> "assign-name-to-segment-with-request-level-api",
             "category" -> SegmentCategory.HttpClient,
-            "library" -> AkkaHttpExtension.SegmentLibraryName))
+            "library" -> AkkaHttpExtension.ClientSegmentLibraryName))
 
         segmentMetricsSnapshot.histogram("elapsed-time").get.numberOfMeasurements should be(1)
       }
@@ -139,7 +139,7 @@ class AkkaHttpClientInstrumentationSpec extends BaseKamonSpec {
           tags = Map(
             "trace" -> "assign-name-to-segment-with-request-level-api",
             "category" -> SegmentCategory.HttpClient,
-            "library" -> AkkaHttpExtension.SegmentLibraryName))
+            "library" -> AkkaHttpExtension.ClientSegmentLibraryName))
 
         segmentMetricsSnapshot.histogram("elapsed-time").get.numberOfMeasurements should be(1)
       }

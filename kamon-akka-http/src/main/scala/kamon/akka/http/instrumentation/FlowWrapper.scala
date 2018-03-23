@@ -78,7 +78,7 @@ object FlowWrapper {
             ctx.finish()
 
             val response = grab(responseIn)
-            metrics.recordResponse(response, ctx.name)
+            metrics.recordResponse(response, ctx.name, ctx.tags)
 
             if (AkkaHttpExtension.settings.includeTraceTokenHeader)
               includeTraceToken(response, AkkaHttpExtension.settings.traceTokenHeaderName, ctx.token)

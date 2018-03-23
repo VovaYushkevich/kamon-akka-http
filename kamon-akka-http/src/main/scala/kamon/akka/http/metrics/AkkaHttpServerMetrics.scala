@@ -17,8 +17,10 @@
 package kamon.akka.http.metrics
 
 import akka.http.scaladsl.model.HttpResponse
-import kamon.metric.instrument.InstrumentFactory
+import kamon.Kamon
+import kamon.akka.http.AkkaHttpExtension
 import kamon.metric.EntityRecorderFactoryCompanion
+import kamon.metric.instrument.InstrumentFactory
 import kamon.util.http.HttpServerMetrics
 
 class AkkaHttpServerMetrics(instrumentFactory: InstrumentFactory) extends HttpServerMetrics(instrumentFactory) {
@@ -27,12 +29,23 @@ class AkkaHttpServerMetrics(instrumentFactory: InstrumentFactory) extends HttpSe
 
   def recordRequest() = requestActive.increment()
 
-  def recordResponse(response: HttpResponse, traceName: String): Unit = {
+  def recordResponse(response: HttpResponse, traceName: String, traceTags: Map[String, String]): Unit = {
     requestActive.decrement()
-    super.recordResponse(traceName, response.status.intValue.toString)
+
+    val entity = Kamon.metrics.entity(AkkaHttpServerMetrics, AkkaHttpExtension.ServerLibraryName, traceTags)
+    val statusCode = response.status.intValue.toString
+
+    entity
+      .counter(statusCode)
+      .increment()
+
+    entity
+      .counter(traceName + "_" + statusCode)
+      .increment()
   }
 
   def recordConnectionOpened(): Unit = connectionOpen.increment()
+
   def recordConnectionClosed(): Unit = connectionOpen.decrement()
 }
 

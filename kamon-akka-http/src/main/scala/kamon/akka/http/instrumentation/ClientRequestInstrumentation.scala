@@ -36,7 +36,7 @@ class ClientRequestInstrumentation {
       val segment =
         if (AkkaHttpExtension.settings.clientInstrumentationLevel == ClientInstrumentationLevel.RequestLevelAPI) {
           val segmentName = AkkaHttpExtension.generateRequestLevelApiSegmentName(request)
-          ctx.startSegment(segmentName, SegmentCategory.HttpClient, AkkaHttpExtension.SegmentLibraryName)
+          ctx.startSegment(segmentName, SegmentCategory.HttpClient, AkkaHttpExtension.ClientSegmentLibraryName)
         } else EmptyTraceContext.EmptySegment
 
       val responseFuture = pjp.proceed().asInstanceOf[Future[HttpResponse]]

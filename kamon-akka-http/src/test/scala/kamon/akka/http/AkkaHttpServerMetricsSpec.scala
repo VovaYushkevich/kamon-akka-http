@@ -77,7 +77,7 @@ class AkkaHttpServerMetricsSpec extends BaseKamonSpec with Matchers {
 
       Await.result(Future.sequence(okResponsesFut ++ badRequestResponsesFut), timeoutStartUpServer)
 
-      val snapshot = takeSnapshotOf("UnnamedTrace", "trace")
+      val snapshot = takeSnapshotOf("UnnamedTrace", "trace", Map())
       snapshot.histogram("elapsed-time").get.numberOfMeasurements should be(15)
     }
 
@@ -103,7 +103,7 @@ class AkkaHttpServerMetricsSpec extends BaseKamonSpec with Matchers {
 
       Await.result(Future.sequence(okResponsesFut ++ badRequestResponsesFut), timeoutStartUpServer)
 
-      val snapshot = takeSnapshotOf("akka-http-server", "http-server")
+      val snapshot = takeSnapshotOf("akka-http-server", "http-server", Map())
       snapshot.counter("UnnamedTrace_200").get.count should be(10)
       snapshot.counter("UnnamedTrace_400").get.count should be(5)
       snapshot.counter("200").get.count should be(10)
